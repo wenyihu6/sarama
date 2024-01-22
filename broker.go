@@ -1683,10 +1683,13 @@ type throttleSupport interface {
 
 func (b *Broker) handleThrottledResponse(resp protocolBody) {
 	throttledResponse, ok := resp.(throttleSupport)
+	DebugLogger.Println("handleThrottledResponse is called")
 	if !ok {
 		return
 	}
 	throttleTime := throttledResponse.throttleTime()
+	DebugLogger.Printf("broker/%d %T throttled HEREEEEE \n", b.ID(), resp)
+	DebugLogger.Printf("broker/%d %T throttled %v\n", b.ID(), resp, throttleTime)
 	if throttleTime == time.Duration(0) {
 		return
 	}
